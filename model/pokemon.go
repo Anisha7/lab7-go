@@ -13,8 +13,8 @@ type Pokemon struct {
 	Owner       Trainer
 	OwnerID     uint
 	Powers      []Power
-	Favorites   []User `gorm:"many2many:favorites;"`
-	Tags        []Tag  `gorm:"many2many:article_tags;association_autocreate:false"`
+	Favorites   []User    `gorm:"many2many:favorites;"`
+	Tags        []PokeTag `gorm:"many2many:article_tags;association_autocreate:false"`
 }
 
 type Power struct {
@@ -23,7 +23,7 @@ type Power struct {
 	power int
 }
 
-type Tag struct {
+type PokeTag struct {
 	gorm.Model
 	Tag    string    `gorm:"unique_index"`
 	Owners []Trainer `gorm:"many2many:article_tags;"`
