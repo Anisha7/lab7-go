@@ -10,10 +10,10 @@ type Store interface {
 	GetTrainerPokemonBySlug(userID uint, slug string) (*model.Pokemon, error)
 	CreatePokemon(*model.Pokemon) error
 	UpdatePokemon(*model.Pokemon, []string) error
-	DeletePokemon(*model.Pokemon) error
+	// DeletePokemon(*model.Pokemon) error
 	List(offset, limit int) ([]model.Pokemon, int, error)
 	ListByTag(tag string, offset, limit int) ([]model.Pokemon, int, error)
-	ListByTrainer(username string, offset, limit int) ([]model.Pokemon, int, error)
+	// ListByTrainer(username string, offset, limit int) ([]model.Pokemon, int, error)
 	ListByWhoFavorited(username string, offset, limit int) ([]model.Pokemon, int, error)
 
 	AddPower(*model.Pokemon, *model.Power) error
