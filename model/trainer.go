@@ -19,8 +19,10 @@ type Trainer struct {
 }
 
 type Badge struct {
-	level int
-	title string
+	TrainerId uint
+	BadgeID   uint
+	Level     int
+	Title     string
 }
 
 func (u *Trainer) HashPassword(plain string) (string, error) {

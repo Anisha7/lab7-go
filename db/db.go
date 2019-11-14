@@ -8,9 +8,11 @@ import (
 	"golang-starter-pack/model"
 
 	"github.com/jinzhu/gorm"
+	// needed
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
+// New ..
 func New() *gorm.DB {
 	db, err := gorm.Open("sqlite3", "./example.db")
 	if err != nil {
@@ -21,6 +23,7 @@ func New() *gorm.DB {
 	return db
 }
 
+// TestDB ..
 func TestDB() *gorm.DB {
 	db, err := gorm.Open("sqlite3", "./../example_test.db")
 	if err != nil {
@@ -31,6 +34,7 @@ func TestDB() *gorm.DB {
 	return db
 }
 
+// DropTestDB ..
 func DropTestDB() error {
 	if err := os.Remove("./../example_test.db"); err != nil {
 		return err
@@ -39,22 +43,23 @@ func DropTestDB() error {
 }
 
 //TODO: err check
-func AutoMigrate(db *gorm.DB) {
-	db.AutoMigrate(
-		&model.User{},
-		&model.Follow{},
-		&model.Article{},
-		&model.Comment{},
-		&model.Tag{},
-	)
-}
-
 // func AutoMigrate(db *gorm.DB) {
 // 	db.AutoMigrate(
-// 		&model.Trainer{},
-// 		&model.Badge{},
-// 		&model.Pokemon{},
-// 		&model.Power{},
+// 		&model.User{},
+// 		&model.Follow{},
+// 		&model.Article{},
+// 		&model.Comment{},
 // 		&model.Tag{},
 // 	)
 // }
+
+// AutoMigrate migrates things into the database
+func AutoMigrate(db *gorm.DB) {
+	db.AutoMigrate(
+		&model.Trainer{},
+		&model.Badge{},
+		&model.Pokemon{},
+		&model.Power{},
+		&model.Tag{},
+	)
+}
