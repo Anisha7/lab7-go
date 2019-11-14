@@ -14,8 +14,8 @@ func main() {
 	d := db.New()
 	db.AutoMigrate(d)
 
-	us := store.NewUserStore(d)
-	as := store.NewArticleStore(d)
+	us := store.NewTrainerStore(d)
+	as := store.NewPokemonStore(d)
 	h := handler.NewHandler(us, as)
 	h.Register(v1)
 	r.Logger.Fatal(r.Start("127.0.0.1:8585"))

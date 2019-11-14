@@ -7,12 +7,12 @@ import (
 
 	"encoding/json"
 
-	"golang-starter-pack/article"
 	"golang-starter-pack/db"
 	"golang-starter-pack/model"
+	"golang-starter-pack/pokemon"
 	"golang-starter-pack/router"
 	"golang-starter-pack/store"
-	"golang-starter-pack/user"
+	"golang-starter-pack/trainer"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
@@ -21,8 +21,8 @@ import (
 
 var (
 	d  *gorm.DB
-	us user.Store
-	as article.Store
+	us trainer.Store
+	as pokemon.Store
 	h  *Handler
 	e  *echo.Echo
 )
@@ -41,8 +41,8 @@ func authHeader(token string) string {
 func setup() {
 	d = db.TestDB()
 	db.AutoMigrate(d)
-	us = store.NewUserStore(d)
-	as = store.NewArticleStore(d)
+	us = store.NewTrainerStore(d)
+	as = store.NewPokemonStore(d)
 	h = NewHandler(us, as)
 	e = router.New()
 	loadFixtures()
@@ -64,7 +64,7 @@ func responseMap(b []byte, key string) map[string]interface{} {
 func loadFixtures() error {
 	u1bio := "user1 bio"
 	u1image := "http://realworld.io/user1.jpg"
-	u1 := model.User{
+	u1 := model.Trainer{
 		Username: "user1",
 		Email:    "user1@realworld.io",
 		Bio:      &u1bio,
@@ -77,7 +77,7 @@ func loadFixtures() error {
 
 	u2bio := "user2 bio"
 	u2image := "http://realworld.io/user2.jpg"
-	u2 := model.User{
+	u2 := model.Trainer{
 		Username: "user2",
 		Email:    "user2@realworld.io",
 		Bio:      &u2bio,
@@ -87,15 +87,15 @@ func loadFixtures() error {
 	if err := us.Create(&u2); err != nil {
 		return err
 	}
-	us.AddFollower(&u2, u1.ID)
+	us.AddBadge(&u2, u1.ID)
 
-	a := model.Article{
+	a := model.Pokemon{
 		Slug:        "article1-slug",
-		Title:       "article1 title",
+		Name:        "pokemon1 title",
 		Description: "article1 description",
-		Body:        "article1 body",
-		AuthorID:    1,
-		Tags: []model.Tag{
+		Level:       1,
+		OwnerID:     1,
+		Tags: []model.PokeTag{
 			{
 				Tag: "tag1",
 			},
@@ -104,35 +104,35 @@ func loadFixtures() error {
 			},
 		},
 	}
-	as.CreateArticle(&a)
-	as.AddComment(&a, &model.Comment{
-		Body:      "article1 comment1",
-		ArticleID: 1,
-		UserID:    1,
-	})
+	// TO-FIX
+	as.CreatePokemon(&a)
+	// as.AddPower(&a, &model.Power{
+	// 	name:  "power",
+	// 	power: 1,
+	// })
 
-	a2 := model.Article{
-		Slug:        "article2-slug",
-		Title:       "article2 title",
-		Description: "article2 description",
-		Body:        "article2 body",
-		AuthorID:    2,
-		Favorites: []model.User{
-			u1,
-		},
-		Tags: []model.Tag{
-			{
-				Tag: "tag1",
-			},
-		},
-	}
-	as.CreateArticle(&a2)
-	as.AddComment(&a2, &model.Comment{
-		Body:      "article2 comment1 by user1",
-		ArticleID: 2,
-		UserID:    1,
-	})
-	as.AddFavorite(&a2, 1)
+	// a2 := model.Pokemon{
+	// 	Slug:        "article2-slug",
+	// 	Name:        "article2 title",
+	// 	Description: "article2 description",
+	// 	Level:       1,
+	// 	OwnerID:     2,
+	// 	Favorites: []model.Pokemon{
+	// 		u1,
+	// 	},
+	// 	Tags: []model.Tag{
+	// 		{
+	// 			Tag: "tag1",
+	// 		},
+	// 	},
+	// }
+	// as.CreatePokemon(&a2)
+	// as.AddPower(&a2, &model.Power{
+	// 	Body:      "article2 comment1 by user1",
+	// 	ArticleID: 2,
+	// 	UserID:    1,
+	// })
+	// as.AddFavorite(&a2, 1)
 
 	return nil
 }

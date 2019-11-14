@@ -163,11 +163,11 @@ func (as *PokemonStore) ListByWhoFavorited(username string, offset, limit int) (
 
 // AddPower ..
 func (as *PokemonStore) AddPower(a *model.Pokemon, c *model.Power) error {
-	err := as.db.Model(a).Association("Comments").Append(c).Error
+	err := as.db.Model(a).Association("Powers").Append(c).Error
 	if err != nil {
 		return err
 	}
-	return as.db.Where(c.ID).Preload("User").First(c).Error
+	return as.db.Where(c.ID).Preload("Pokemon").First(c).Error
 }
 
 // GetPowersBySlug ..

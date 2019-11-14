@@ -1,4 +1,4 @@
-package article
+package pokemon
 
 import (
 	"golang-starter-pack/model"
@@ -16,7 +16,7 @@ type Store interface {
 	ListByTrainer(username string, offset, limit int) ([]model.Pokemon, int, error)
 	ListByWhoFavorited(username string, offset, limit int) ([]model.Pokemon, int, error)
 
-	AddPower(*model.Article, *model.Power) error
+	AddPower(*model.Pokemon, *model.Power) error
 	GetPowersBySlug(string) ([]model.Power, error)
 	GetPowerByID(uint) (*model.Power, error)
 	DeletePower(*model.Power) error

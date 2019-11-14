@@ -1,4 +1,4 @@
-package user
+package trainer
 
 import (
 	"golang-starter-pack/model"

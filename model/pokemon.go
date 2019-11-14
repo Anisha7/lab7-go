@@ -13,7 +13,7 @@ type Pokemon struct {
 	Owner       Trainer
 	OwnerID     uint
 	Powers      []Power
-	Favorites   []User    `gorm:"many2many:favorites;"`
+	Favorites   []Pokemon `gorm:"many2many:favorites;"`
 	Tags        []PokeTag `gorm:"many2many:article_tags;association_autocreate:false"`
 }
 

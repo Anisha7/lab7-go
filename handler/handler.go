@@ -1,18 +1,20 @@
 package handler
 
 import (
-	"golang-starter-pack/article"
-	"golang-starter-pack/user"
+	"golang-starter-pack/pokemon"
+	"golang-starter-pack/trainer"
 )
 
+// Handler ..
 type Handler struct {
-	userStore    user.Store
-	articleStore article.Store
+	trainerStore trainer.Store
+	pokemonStore pokemon.Store
 }
 
-func NewHandler(us user.Store, as article.Store) *Handler {
+// NewHandler ..
+func NewHandler(us trainer.Store, as pokemon.Store) *Handler {
 	return &Handler{
-		userStore:    us,
-		articleStore: as,
+		trainerStore: us,
+		pokemonStore: as,
 	}
 }
